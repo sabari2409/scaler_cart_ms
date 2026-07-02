@@ -1,0 +1,66 @@
+package com.scaler.cart.assignments.services;
+
+import com.scaler.cart.assignments.dtos.AmazonProductDataDto;
+import com.scaler.cart.assignments.dtos.AmazonProductDto;
+import com.scaler.cart.assignments.models.AmazonProduct;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+@Service
+public class AmazonProductService implements IProductService {
+
+    private final String BASE_URL = "https://real-time-amazon-data.p.rapidapi.com/";
+    private final String headerValue = "2b7d719a6emshc865030ef65fe01p1d8b17jsncbf82267fa49";
+    private final String headerName = "X-RapidAPI-Key";
+
+    @Autowired
+    RestTemplateBuilder restTemplateBuilder;
+
+    public List<AmazonProduct> getProductByName(String name) {
+        RestTemplate restTemplate = this.restTemplateBuilder.build();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set(headerName, headerValue);
+
+        HttpEntity<HttpHeaders> httpEntity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<AmazonProductDto> responseEntity =
+                restTemplate.exchange(this.BASE_URL + "search?query={name}", HttpMethod.GET, httpEntity, AmazonProductDto.class, name);
+
+        if (!responseEntity.hasBody()) {
+            throw new RuntimeException("Unable to get products by category Id");
+        }
+        return Objects.requireNonNull(responseEntity.getBody()).getData().getProducts();
+    }
+
+    public List<AmazonProduct> getProductByCategoryId(String categoryId) {
+        System.out.println("Category Id -->" + categoryId);
+        RestTemplate restTemplate = this.restTemplateBuilder.build();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set(headerName, headerValue);
+
+        HttpEntity<HttpHeaders> httpEntity = new HttpEntity<>(httpHeaders);
+
+        System.out.println("base url -->" + this.BASE_URL + "products-by-category?category_id={cid}");
+
+        ResponseEntity<AmazonProductDto> responseEntity =
+                restTemplate.exchange(this.BASE_URL + "products-by-category?category_id={cid}", HttpMethod.GET, httpEntity, AmazonProductDto.class, categoryId);
+        System.out.println("Response entity has body -->" + responseEntity);
+        if (!responseEntity.hasBody()) {
+            throw new RuntimeException("Unable to get products by category Id");
+        }
+        return Objects.requireNonNull(responseEntity.getBody()).getData().getProducts();
+    }
+}

@@ -1,10 +1,10 @@
-package com.scaler.product;
+package com.scaler.cart;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProductApplicationTests {
+class CartApplicationTests {
 
 	@Test
 	void contextLoads() {
