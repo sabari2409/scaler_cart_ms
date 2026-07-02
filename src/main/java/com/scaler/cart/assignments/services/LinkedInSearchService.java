@@ -32,6 +32,7 @@ public class LinkedInSearchService implements ISearchService {
         List<ClientHttpRequestInterceptor> interceptor = new ArrayList<ClientHttpRequestInterceptor>();
         interceptor.add(new HeaderRequestInterceptor(headerName, headerValue));
         restTemplate.setInterceptors(interceptor);
+
         ResponseEntity<LinkedInSearchResult> searchResultList =
                 restTemplate.postForEntity(this.BASE_URL + "search-people-by-url", linkedInSearchRequest, LinkedInSearchResult.class);
         if (!searchResultList.hasBody()) {
