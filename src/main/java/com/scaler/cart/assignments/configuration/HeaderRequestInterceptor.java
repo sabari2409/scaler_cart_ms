@@ -1,4 +1,4 @@
-package com.scaler.cart.assignments.services;
+package com.scaler.cart.assignments.configuration;
 
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;

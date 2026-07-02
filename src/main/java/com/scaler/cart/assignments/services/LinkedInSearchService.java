@@ -1,12 +1,12 @@
 package com.scaler.cart.assignments.services;
 
 
+import com.scaler.cart.assignments.configuration.HeaderRequestInterceptor;
 import com.scaler.cart.assignments.dtos.LinkedInSearchRequest;
 import com.scaler.cart.assignments.dtos.LinkedInSearchResult;
 import com.scaler.cart.assignments.models.LinkedInSearchItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.stereotype.Service;
