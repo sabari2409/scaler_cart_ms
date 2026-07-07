@@ -12,10 +12,6 @@ public class Teacher {
 
     private String name;
 
-//    @OneToMany(mappedBy = "teachers")
-//    private Set<Student> students;
-
-
     @ManyToMany(mappedBy = "teachers")
     private Set<Student> students = new HashSet<>();
 
