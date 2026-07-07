@@ -7,18 +7,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "teacher_rating")
 public class TeacherRating {
 
     @EmbeddedId
-    private StudentTeacherRatingId studentTeacherRatingId;
+    private StudentsTeachers studentsTeachers;
 
     @ManyToOne
-    @MapsId("id")
+    @MapsId("studentId")
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
     @ManyToOne
-    @MapsId("id")
+    @MapsId("teacherId")
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
 

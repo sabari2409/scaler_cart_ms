@@ -2,6 +2,7 @@ package com.scaler.cart.assignments.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -12,9 +13,16 @@ public class Student {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Set<Teacher> teachers;
+//    @OneToMany(mappedBy = "students")
+//    private Set<Teacher> teachers;
+
+    @ManyToMany
+    @JoinTable(
+            name = "students_teachers",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id")
+    )
+    private Set<Teacher> teachers = new HashSet<>();
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<TeacherRating> ratings;
