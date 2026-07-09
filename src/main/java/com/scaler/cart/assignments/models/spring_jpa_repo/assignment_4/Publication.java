@@ -1,4 +1,4 @@
-package com.scaler.cart.assignments.models.springjparepo_assign3;
+package com.scaler.cart.assignments.models.spring_jpa_repo.assignment_4;
 
 import jakarta.persistence.*;
 import lombok.Data;

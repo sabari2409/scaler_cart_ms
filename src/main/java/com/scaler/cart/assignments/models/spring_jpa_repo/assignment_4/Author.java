@@ -1,10 +1,9 @@
-package com.scaler.cart.assignments.models.springjparepo_assign3;
+package com.scaler.cart.assignments.models.spring_jpa_repo.assignment_4;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
