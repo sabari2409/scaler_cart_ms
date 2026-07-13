@@ -1,6 +1,6 @@
 package com.scaler.cart.assignments.dtos;
 
-import com.scaler.cart.assignments.models.News;
+import com.scaler.cart.assignments.models.other_assignments.News;
 import lombok.Data;
 
 import java.util.List;

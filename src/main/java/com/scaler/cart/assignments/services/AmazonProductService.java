@@ -1,22 +1,17 @@
 package com.scaler.cart.assignments.services;
 
 import com.scaler.cart.assignments.configuration.ApiProperties;
-import com.scaler.cart.assignments.dtos.AmazonProductDataDto;
 import com.scaler.cart.assignments.dtos.AmazonProductDto;
-import com.scaler.cart.assignments.models.AmazonProduct;
+import com.scaler.cart.assignments.models.other_assignments.AmazonProduct;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

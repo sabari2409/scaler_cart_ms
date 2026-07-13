@@ -1,10 +1,8 @@
 package com.scaler.cart.assignments.services;
 
-import com.scaler.cart.assignments.dtos.RealTimeCashFlowData;
-
 import com.scaler.cart.assignments.dtos.RealTimeNewsData;
 import com.scaler.cart.assignments.dtos.RealTimeNewsResult;
-import com.scaler.cart.assignments.models.News;
+import com.scaler.cart.assignments.models.other_assignments.News;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;

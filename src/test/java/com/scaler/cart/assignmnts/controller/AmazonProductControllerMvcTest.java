@@ -2,7 +2,7 @@ package com.scaler.cart.assignmnts.controller;
 
 
 import com.scaler.cart.assignments.controller.AmazonProductController;
-import com.scaler.cart.assignments.models.AmazonProduct;
+import com.scaler.cart.assignments.models.other_assignments.AmazonProduct;
 import com.scaler.cart.assignments.services.IProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

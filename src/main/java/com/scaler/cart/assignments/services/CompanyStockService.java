@@ -4,8 +4,8 @@ import com.scaler.cart.assignments.dtos.RealTimeCashFlowData;
 import com.scaler.cart.assignments.dtos.RealTimeCashFlowResult;
 import com.scaler.cart.assignments.dtos.RealTimeNewsData;
 import com.scaler.cart.assignments.dtos.RealTimeNewsResult;
-import com.scaler.cart.assignments.models.CashFlow;
-import com.scaler.cart.assignments.models.News;
+import com.scaler.cart.assignments.models.other_assignments.CashFlow;
+import com.scaler.cart.assignments.models.other_assignments.News;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

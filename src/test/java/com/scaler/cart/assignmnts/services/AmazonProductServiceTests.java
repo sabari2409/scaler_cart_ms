@@ -3,7 +3,7 @@ package com.scaler.cart.assignmnts.services;
 
 import com.scaler.cart.assignments.dtos.AmazonProductDataDto;
 import com.scaler.cart.assignments.dtos.AmazonProductDto;
-import com.scaler.cart.assignments.models.AmazonProduct;
+import com.scaler.cart.assignments.models.other_assignments.AmazonProduct;
 import com.scaler.cart.assignments.services.AmazonProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

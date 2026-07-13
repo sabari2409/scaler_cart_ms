@@ -1,6 +1,6 @@
 package com.scaler.cart.assignments.controller;
 
-import com.scaler.cart.assignments.models.News;
+import com.scaler.cart.assignments.models.other_assignments.News;
 import com.scaler.cart.assignments.services.ICurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
 package com.scaler.cart.assignments.dtos;
 
-import com.scaler.cart.assignments.models.CashFlow;
+import com.scaler.cart.assignments.models.other_assignments.CashFlow;
 import lombok.Data;
 
 import java.util.List;
