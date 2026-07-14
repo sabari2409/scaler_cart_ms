@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Product {
+public class ProductAssignment$ {
 
     @Id
     protected Long id;
