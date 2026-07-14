@@ -3,7 +3,6 @@ package com.scaler.cart.assignments.services;
 
 import com.scaler.cart.assignments.repo.fetch_types_assignments.assignment_2.CategoryRepo;
 import com.scaler.cart.assignments.services.fetch_types_assignments.assignment_2.CategoryService;
-import com.scaler.cart.assignments.services.fetch_types_assignments.assignment_2.CustomStatementInspector;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

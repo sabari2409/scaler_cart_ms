@@ -1,4 +1,4 @@
-package com.scaler.cart.assignments.services.fetch_types_assignments.assignment_2;
+package com.scaler.cart.assignments.services;
 
 import org.hibernate.resource.jdbc.spi.StatementInspector;
 import org.springframework.stereotype.Component;

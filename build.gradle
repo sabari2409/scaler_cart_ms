@@ -47,6 +47,11 @@ dependencies {
     testRuntimeOnly 'com.h2database:h2'
 }
 
+// For operations such as Pair
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.17.0'
+}
+
 
 tasks.named('test') {
     useJUnitPlatform()
