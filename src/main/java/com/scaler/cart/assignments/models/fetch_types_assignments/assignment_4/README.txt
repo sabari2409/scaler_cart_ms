@@ -46,3 +46,20 @@ id = 41, customer_id = C1, totalCost = 60000                                    
         --------------------------------------------------------------------------
         id = 11, title = "One plus Nord 5E", description = "One Plus", imageUrl="", price=20000, isPremium = false, inventory_id = 23
         id = 13, title = "Samsung Galaxy", description ="Galaxy", imageUrl="", price = 34000, isPremium = false, inventory_id = 45
+
+
+SQL Queries:
+-------------------
+insert into customer(email,name,password) values( 'sabari@gmail.com', 'sabari', 'admin');
+
+select * from customer;
+
+select * from item;
+
+insert into item(is_premium,price,description,title) values(false, 2000, 'Android phone', 'One plus nord');
+
+select * from inventory;
+insert into inventory(count, ordering_cost,stock_out_cost, item_id) values(5,500,5000,1);
+
+select * from orders;
+select * from order_state_time_mapping;

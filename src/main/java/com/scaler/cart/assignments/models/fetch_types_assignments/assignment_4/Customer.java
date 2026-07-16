@@ -1,5 +1,6 @@
 package com.scaler.cart.assignments.models.fetch_types_assignments.assignment_4;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,10 +23,11 @@ public class Customer {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "customers_addresses",
-            joinColumns = @JoinColumn(name = "customers_id"),
-            inverseJoinColumns = @JoinColumn(name = "addresses_id")
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id")
     )
     @Fetch(FetchMode.SUBSELECT)
+    @JsonIgnore
     private List<AddressAssignment4> addresses;
 
     private String email;
@@ -33,5 +35,7 @@ public class Customer {
     private String password;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @JsonIgnore
     private List<Order> orders;
 }

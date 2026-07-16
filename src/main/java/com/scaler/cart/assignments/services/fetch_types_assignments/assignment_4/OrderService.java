@@ -3,11 +3,14 @@ package com.scaler.cart.assignments.services.fetch_types_assignments.assignment_
 import com.scaler.cart.assignments.exceptions.fetch_types.assignment_4.ShortInventoryException;
 import com.scaler.cart.assignments.models.fetch_types_assignments.assignment_4.*;
 import com.scaler.cart.assignments.repo.fetch_types_assignments.assignment_4.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class OrderService implements IOrderService {
@@ -32,6 +35,7 @@ public class OrderService implements IOrderService {
     public Order createOrder(Map<Long, Long> itemQuantityMap, Long customerId) throws ShortInventoryException {
         // Get the customer details by customer id
         Optional<Customer> customerRepoResponse = this.customerRepo.findById(customerId);
+        List<Item> itemsList = new ArrayList<>();
         if (customerRepoResponse.isEmpty())
             throw new RuntimeException("Customer details is not available. Unable to place an order");
         Customer customerEntity = customerRepoResponse.get();
@@ -57,6 +61,7 @@ public class OrderService implements IOrderService {
             // Get the items info from item repo
             Optional<Item> item = this.itemRepo.findById(itemId);
             if (item.isEmpty()) throw new RuntimeException("Item not present. Please create an item");
+            itemsList.add(item.get());
 
             // Get the inventory details based on itemId
             Optional<Inventory> inventoryDetails = this.inventoryRepo.findByItem(item.get());
@@ -68,12 +73,6 @@ public class OrderService implements IOrderService {
             if (inventoryQuantity < purchaseQuantity)
                 throw new ShortInventoryException("Ordered Quantity is not Available");
 
-            // Create ItemDetails entry based on items
-            ItemDetail itemDetail = new ItemDetail();
-            itemDetail.setItem(item.get());
-            itemDetail.setQuantity(purchaseQuantity);
-            itemDetail.setOrder(null);
-            this.itemDetailRepo.save(itemDetail);
 
             // Now based on the purchase quantity update inventory
             Double balanceQuantity = inventoryQuantity - purchaseQuantity;
@@ -82,10 +81,11 @@ public class OrderService implements IOrderService {
             this.inventoryRepo.save(inventory);
 
             // Calculate the total cost
-            Double itemPrice = itemDetail.getItem().getPrice();
+            Double itemPrice = item.get().getPrice();
             totalCost += purchaseQuantity * itemPrice;
             System.out.println("Total cost = " + totalCost);
         }
+
 
         // create order
         Order order = new Order();
@@ -98,7 +98,24 @@ public class OrderService implements IOrderService {
         orderStateTimeMapping.setOrderState(OrderState.CONFIRMED);
         orderStateTimeMapping.setOrder(savedOrderDetails);
         orderStateTimeMapping.setDate(new Date());
+        this.orderStateTimeMappingRepo.save(orderStateTimeMapping);
+        savedOrderDetails.setOrderTimeline(List.of(orderStateTimeMapping));
 
-        return order;
+        List<ItemDetail> itemDetailList = new ArrayList<>();
+        for (Map.Entry<Long, Long> entry : itemQuantityMap.entrySet()) {
+            Long itemId = entry.getKey();
+            Long purchaseQuantity = entry.getValue();
+            Set<Item> item = itemsList.stream().filter((d) -> Objects.equals(d.getId(), itemId)).collect(Collectors.toSet());
+            // Create ItemDetails entry based on items
+            ItemDetail itemDetail = new ItemDetail();
+            itemDetail.setItem(item.stream().findFirst().get());
+            itemDetail.setQuantity(purchaseQuantity);
+            itemDetail.setOrder(savedOrderDetails);
+            this.itemDetailRepo.save(itemDetail);
+            itemDetailList.add(itemDetail);
+        }
+        savedOrderDetails.setItems(itemDetailList);
+
+        return savedOrderDetails;
     }
 }

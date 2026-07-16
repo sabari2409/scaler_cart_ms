@@ -18,5 +18,5 @@ public class Subscription {
     protected Status status;
 
     @OneToMany(mappedBy = "subscription")
-    private List<ProductAssignment$> products;
+    private List<ProductAssignment4> products;
 }

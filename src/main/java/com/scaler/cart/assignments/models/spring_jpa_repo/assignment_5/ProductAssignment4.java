@@ -4,11 +4,9 @@ package com.scaler.cart.assignments.models.spring_jpa_repo.assignment_5;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Entity
-public class ProductAssignment$ {
+public class ProductAssignment4 {
 
     @Id
     protected Long id;

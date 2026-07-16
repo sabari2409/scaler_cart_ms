@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-public class Pen extends ProductAssignment$ {
+public class Pen extends ProductAssignment4 {
 
     @Enumerated(EnumType.ORDINAL)
     private PenType penType;

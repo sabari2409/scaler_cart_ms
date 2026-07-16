@@ -1,5 +1,6 @@
 package com.scaler.cart.assignments.models.fetch_types_assignments.assignment_4;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -14,11 +15,13 @@ public class ItemDetail extends BaseModel {
 
     @OneToOne
     @JoinColumn(name = "item_id", nullable = false)
+    @JsonIgnore
     private Item item;
 
     private Long quantity;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 }

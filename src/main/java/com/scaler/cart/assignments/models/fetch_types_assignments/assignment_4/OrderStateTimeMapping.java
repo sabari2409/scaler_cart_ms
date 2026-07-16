@@ -1,5 +1,6 @@
 package com.scaler.cart.assignments.models.fetch_types_assignments.assignment_4;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +19,6 @@ public class OrderStateTimeMapping extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 }

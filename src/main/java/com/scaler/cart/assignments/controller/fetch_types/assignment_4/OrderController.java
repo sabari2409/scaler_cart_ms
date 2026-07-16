@@ -16,10 +16,6 @@ public class OrderController {
 
     @PostMapping
     public Order create(@RequestBody CreateOrderRequestDto requestDto) throws ShortInventoryException {
-        try {
-            return this.orderService.createOrder(requestDto.getItemQuantityMap(), requestDto.getCustomerId());
-        } catch (ShortInventoryException ex) {
-            throw new ShortInventoryException(ex.getMessage());
-        }
+        return this.orderService.createOrder(requestDto.getItemQuantityMap(), requestDto.getCustomerId());
     }
 }

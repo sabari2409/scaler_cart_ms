@@ -1,5 +1,6 @@
 package com.scaler.cart.assignments.models.fetch_types_assignments.assignment_4;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -13,6 +14,7 @@ public class Inventory extends BaseModel {
 
     @OneToOne
     @JoinColumn(name = "item_id")
+    @JsonIgnore
     private Item item;
 
     private Double count;
