@@ -34,6 +34,8 @@ public class Customer {
 
     private String password;
 
+    private Long orderCancellationCount = 0L;
+
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @JsonIgnore

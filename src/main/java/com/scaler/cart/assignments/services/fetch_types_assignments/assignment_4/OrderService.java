@@ -1,6 +1,7 @@
 package com.scaler.cart.assignments.services.fetch_types_assignments.assignment_4;
 
 import com.scaler.cart.assignments.exceptions.fetch_types.assignment_4.ShortInventoryException;
+import com.scaler.cart.assignments.exceptions.fetch_types.assignment_5.OrderNotFoundException;
 import com.scaler.cart.assignments.models.fetch_types_assignments.assignment_4.*;
 import com.scaler.cart.assignments.repo.fetch_types_assignments.assignment_4.*;
 
@@ -125,5 +126,46 @@ public class OrderService implements IOrderService {
         savedOrderDetails.setItems(itemDetailList);
 
         return savedOrderDetails;
+    }
+
+
+    /**
+     * cancelOrder
+     * @param orderId
+     * @return
+     * @throws OrderNotFoundException
+     */
+    public Boolean cancelOrder(Long orderId) throws OrderNotFoundException {
+        // TODO: Get Order from DB based on OrderId, If order is not present, throw OrderNotFoundException with message - orderId is wrong
+        Order orderDetails = this.orderRepo.findById(orderId).orElseThrow(() -> new OrderNotFoundException("orderId is wrong"));
+
+        // TODO: Get ItemDetails saved in DB corresponding to that Order and delete them. After deleting the item details, update Inventory back
+        List<ItemDetail> itemDetailList = this.itemDetailRepo.findByOrder(orderDetails);
+        for (ItemDetail itemDetail : itemDetailList) {
+            Optional<Inventory> inventoryDetails = this.inventoryRepo.findByItem(itemDetail.getItem());
+            if (inventoryDetails.isEmpty())
+                throw new RuntimeException("Inventory is not present. Unable to process this request");
+
+
+            Double lastQuantity = Math.abs(inventoryDetails.get().getCount() + itemDetail.getQuantity());
+            Inventory inventory = inventoryDetails.get();
+            inventory.setCount(lastQuantity);
+            this.inventoryRepo.save(inventory);
+            this.itemDetailRepo.delete(itemDetail);
+        }
+
+        // TODO: Create OrderStateTimeMapping with cancelled order state for this Order and persist into DB.
+        OrderStateTimeMapping orderStateTimeMapping = new OrderStateTimeMapping();
+        orderStateTimeMapping.setDate(new Date());
+        orderStateTimeMapping.setOrderState(OrderState.CANCELLED);
+        orderStateTimeMapping.setOrder(orderDetails);
+        this.orderStateTimeMappingRepo.save(orderStateTimeMapping);
+
+        // TODO: Also get Customer who has cancelled the order and update it's OrderCancellationCount and persist into DB.
+        Customer customer = orderDetails.getCustomer();
+        Long newCancellationCount = customer.getOrderCancellationCount() + 1L;
+        customer.setOrderCancellationCount(newCancellationCount);
+        this.customerRepo.save(customer);
+        return true;
     }
 }

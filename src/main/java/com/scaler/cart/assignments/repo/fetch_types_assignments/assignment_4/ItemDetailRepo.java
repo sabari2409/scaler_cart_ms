@@ -5,11 +5,14 @@ import com.scaler.cart.assignments.models.fetch_types_assignments.assignment_4.O
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ItemDetailRepo extends JpaRepository<ItemDetail, Long> {
     ItemDetail save(ItemDetail itemDetail);
 
-    Optional<ItemDetail> findByOrder(Order order);
+//    Optional<ItemDetail> findByOrderDetails(Order order);
+
+    List<ItemDetail> findByOrder(Order order);
 }

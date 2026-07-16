@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scaler.cart.assignments.controller.fetch_types.assignment_4.OrderController;
 import com.scaler.cart.assignments.dtos.fetch_types.assignment_4.CreateOrderRequestDto;
 import com.scaler.cart.assignments.exceptions.fetch_types.assignment_4.ShortInventoryException;
+import com.scaler.cart.assignments.exceptions.fetch_types.assignment_5.OrderNotFoundException;
+import com.scaler.cart.assignments.models.fetch_types_assignments.assignment_4.CancelOrderRequestDto;
 import com.scaler.cart.assignments.models.fetch_types_assignments.assignment_4.Order;
 import com.scaler.cart.assignments.services.fetch_types_assignments.assignment_4.IOrderService;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Map;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -78,5 +81,40 @@ public class OrderControllerMvcTest {
                 .andExpect(content().string("Ordered Quantity is not Available"));
 
         verify(orderService, times(1)).createOrder(createOrderRequestDto.getItemQuantityMap(), createOrderRequestDto.getCustomerId());
+    }
+
+    @Test
+    void testCancelOrderSuccess() throws Exception {
+        Long orderId = 1L;
+
+        CancelOrderRequestDto cancelOrderRequestDto = new CancelOrderRequestDto();
+        cancelOrderRequestDto.setOrderId(orderId);
+
+        when(orderService.cancelOrder(orderId)).thenReturn(true);
+
+        mockMvc.perform(delete("/order")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(cancelOrderRequestDto)))
+                .andExpect(status().isOk());
+
+        verify(orderService, times(1)).cancelOrder(orderId);
+    }
+
+    @Test
+    void testCancelOrderOrderNotFoundException() throws Exception {
+        Long orderId = 1L;
+
+        CancelOrderRequestDto cancelOrderRequestDto = new CancelOrderRequestDto();
+        cancelOrderRequestDto.setOrderId(orderId);
+
+        when(orderService.cancelOrder(orderId)).thenThrow(new OrderNotFoundException("Order not found"));
+
+        mockMvc.perform(delete("/order")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(cancelOrderRequestDto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Order not found"));
+
+        verify(orderService, times(1)).cancelOrder(orderId);
     }
 }

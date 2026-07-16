@@ -22,7 +22,7 @@ You need not to do anything in dtos , exceptions and repos package. Just refer t
 Inventory (id, item_id, count, orderingCost, stockOutCost)
 -----------------------------------------------------------------
 id = 23, item_id = 11, count = 10, orderingCost = 1000, stockOutCost = 5000
-id = 45, item_id = 12, count = 5, orderingCost = 1300, stockOutCost = 1500
+id = 45, item_id = 13, count = 5, orderingCost = 1300, stockOutCost = 1500
      |
      | 1:1
      |
