@@ -36,6 +36,7 @@ public class OrderService implements IOrderService {
         // Get the customer details by customer id
         Optional<Customer> customerRepoResponse = this.customerRepo.findById(customerId);
         List<Item> itemsList = new ArrayList<>();
+        Map<Long, Item> itemsMap = new HashMap<>();
         if (customerRepoResponse.isEmpty())
             throw new RuntimeException("Customer details is not available. Unable to place an order");
         Customer customerEntity = customerRepoResponse.get();
@@ -61,7 +62,8 @@ public class OrderService implements IOrderService {
             // Get the items info from item repo
             Optional<Item> item = this.itemRepo.findById(itemId);
             if (item.isEmpty()) throw new RuntimeException("Item not present. Please create an item");
-            itemsList.add(item.get());
+            itemsMap.put(itemId, item.get()); // Approach 2
+//            itemsList.add(item.get()); - Approach 1
 
             // Get the inventory details based on itemId
             Optional<Inventory> inventoryDetails = this.inventoryRepo.findByItem(item.get());
@@ -105,10 +107,16 @@ public class OrderService implements IOrderService {
         for (Map.Entry<Long, Long> entry : itemQuantityMap.entrySet()) {
             Long itemId = entry.getKey();
             Long purchaseQuantity = entry.getValue();
-            Set<Item> item = itemsList.stream().filter((d) -> Objects.equals(d.getId(), itemId)).collect(Collectors.toSet());
+
+            // Below line no 112 is approach 1. Time complexity is high. So I have commented it out.
+//            Set<Item> item = itemsList.stream().filter((d) -> Objects.equals(d.getId(), itemId)).collect(Collectors.toSet());
+
+            // Approach 2: Using hashmap
+            Item item = itemsMap.get(itemId);
+
             // Create ItemDetails entry based on items
             ItemDetail itemDetail = new ItemDetail();
-            itemDetail.setItem(item.stream().findFirst().get());
+            itemDetail.setItem(item);
             itemDetail.setQuantity(purchaseQuantity);
             itemDetail.setOrder(savedOrderDetails);
             this.itemDetailRepo.save(itemDetail);
